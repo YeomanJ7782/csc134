@@ -22,3 +22,4 @@ int main() {
     double totalPrice = (double) apples * pricePerApple;
     cout << "Total price is: $" <<totalPrice <<endl;
 }
+
