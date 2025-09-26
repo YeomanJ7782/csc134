@@ -26,13 +26,19 @@ int main() {
 
 
     // Calculate the meal price
-    tax_amount = item_price + tax_percent; // take 8% of the item
+    tax_amount = item_price * tax_percent; // take 8% of the item
     total = item_price + tax_amount;
 
 
     // Print the reciept 
     cout << setprecision(2) << fixed;
-    cout << total << endl;
+    cout << "Thank you for shopping with us" << endl;
+    cout << "-------------------------------" << endl;
+    cout << item << "\t\t$" << item_price << endl;
+    cout << "Tax" << "\t\t$" << tax_amount << endl;
+    cout << "-------------------------------" << endl;
+    cout << "Total" << "\t\t" << total << endl;
+    cout << endl;
 
 
     return 0; // no errors
