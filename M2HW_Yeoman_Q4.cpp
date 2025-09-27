@@ -12,7 +12,7 @@ using namespace std;
 int main() {
     // Variables
     string letsGo, school, team;
-    string cheerOne, cheerTwo;
+    string cheerOne, cheerTwo, cheerThree;
 
     // Assign base values
     letsGo = "Let's go ";
@@ -20,14 +20,17 @@ int main() {
     team = "Trojans";
 
     // Build cheers using concatenation
-    cheerOne = letsGo + school;
-    cheerTwo = letsGo + team;
+    cheerOne = letsGo + team;
+    cheerTwo = letsGo;
+    cheerThree = letsGo + school;
 
     // Output the cheers
-    cout << cheerOne << endl;
-    cout << cheerOne << endl;
+    cout << "Question 4" << endl;
     cout << cheerOne << endl;
     cout << cheerTwo << endl;
+    cout << cheerOne << endl;
+    cout << cheerTwo << endl;
+    cout << cheerThree << endl;
 
     return 0;
 }
