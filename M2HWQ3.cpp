@@ -30,7 +30,7 @@ int main() {
     // Output
     cout << "\n--- Pizza Party Report ---\n";
     cout << "Total slices available: " << totalSlices << endl;
-    cout << "Slices needed (3 per visitor): " << neededSlices << endl;
+    cout << "Total slices needed (3 per visitor): " << neededSlices << endl;
     cout << "Slices left over: " << leftovers << endl;
 
     return 0;
