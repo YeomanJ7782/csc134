@@ -13,6 +13,7 @@ int main() {
     int totalSlices, neededSlices, leftovers;
 
     // Input
+    cout << "Question 3" << endl;
     cout << "Enter the number of pizzas ordered: ";
     cin >> pizzas;
 
