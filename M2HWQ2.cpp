@@ -1,4 +1,10 @@
-#include <iostream>
+/*
+CSC 134
+M2HW Question 2
+Julie Yeoman
+September 26 2025
+*/
+
 #include <iomanip>
 using namespace std;
 
