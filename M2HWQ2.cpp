@@ -20,7 +20,7 @@ int main() {
         cout << setprecision(2) << fixed << showpoint;
 
         // Prompt the user for the crate's length, width and height
-        cout << "Enter the dimensions of the crate (in feet):\n";
+        cout << "Q2. Enter the dimensions of the crate (in feet):\n";
         cout << "Length: "; 
         cin >> length;
         cout << "Width: ";
