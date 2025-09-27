@@ -19,7 +19,8 @@ int main() {
     int accountNumber = rand();
 
     // Ask for user's name
-    cout << "Q1. Enter your first name: " << endl;
+    cout << "Question 1" << endl;
+    cout << "Enter your first name: " << endl;
     cin >> firstName;
     cout << "Enter your last name: " << endl;
     cin >> lastName;
