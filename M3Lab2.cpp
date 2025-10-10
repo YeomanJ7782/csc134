@@ -5,8 +5,6 @@ Julie Yeoman
 10/9/25
 */
 
-
-
 #include <iostream>
 using namespace std;
 
