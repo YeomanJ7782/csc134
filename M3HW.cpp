@@ -1,9 +1,11 @@
-// CSC 134
-// M3HW1 - Gold
-// Your Name
-// Date
-// This program completes all four M3HW1 questions using if statements.
-// Each question is separated and labeled for clarity.
+/*
+CSC 134
+M3HW - Gold
+Julie Yeoman
+10/15/2025
+*/
+
+
 
 #include <iostream>
 #include <cstdlib>  // for rand() and srand()
@@ -12,9 +14,8 @@ using namespace std;
 
 int main() {
 
-    // -------------------------------
     // Question 1: Simple Chat Bot
-    // -------------------------------
+
     cout << "Question 1: Simple Chat Bot" << endl;
     cout << "---------------------------" << endl;
 
@@ -37,9 +38,8 @@ int main() {
     cout << "\n--------------------------------------------\n" << endl;
 
 
-    // -------------------------------
     // Question 2: Receipt Calculator
-    // -------------------------------
+    
     cout << "Question 2: Receipt Calculator" << endl;
     cout << "-------------------------------" << endl;
 
@@ -65,4 +65,83 @@ int main() {
     cout << "Meal price: $" << meal_price << endl;
     cout << "Tax: $" << tax << endl;
     cout << "Tip: $" << tip << endl;
-    cout << "----------
+    cout << "-----------------" << endl;
+    cout << "Total due: $" << total << endl;
+
+    cout << "\n--------------------------------------------\n" << endl;
+
+
+    // Question 3: Choose Your Own Adventure
+
+    cout << "Question 3: Choose Your Own Adventure" << endl;
+    cout << "-------------------------------------" << endl;
+
+    cout << "You wake up in a dark forest. Do you go 'left' or 'right'?" << endl;
+    string choice1;
+    cin >> choice1;
+
+    if (choice1 == "left") {
+        cout << "You find a river. Do you 'swim' across or 'follow' it?" << endl;
+        string choice2;
+        cin >> choice2;
+
+        if (choice2 == "swim") {
+            cout << "You are swept away by the current. Game over!" << endl;
+        } 
+        else if (choice2 == "follow") {
+            cout << "You find a village and are saved. You win!" << endl;
+        } 
+        else {
+            cout << "You hesitate too long and night falls. Game over." << endl;
+        }
+    } 
+    else if (choice1 == "right") {
+        cout << "You meet a bear. Do you 'run' or 'climb' a tree?" << endl;
+        string choice2;
+        cin >> choice2;
+
+        if (choice2 == "run") {
+            cout << "The bear catches you. Game over!" << endl;
+        } 
+        else if (choice2 == "climb") {
+            cout << "You escape and live to tell the tale. You win!" << endl;
+        } 
+        else {
+            cout << "You freeze in fear. Game over!" << endl;
+        }
+    } 
+    else {
+        cout << "You wander aimlessly until you get lost. Game over." << endl;
+    }
+
+    cout << "\n--------------------------------------------\n" << endl;
+
+
+    // Question 4: Math Practice Program
+
+    cout << "Question 4: Math Practice Program" << endl;
+    cout << "--------------------------------" << endl;
+
+    srand(time(0));  // Seed the random number generator
+
+    int num1 = rand() % 10; // 0–9
+    int num2 = rand() % 10; // 0–9
+
+    cout << "What is " << num1 << " plus " << num2 << "?" << endl;
+    int user_answer;
+    cin >> user_answer;
+
+    int correct_answer = num1 + num2;
+
+    if (user_answer == correct_answer) {
+        cout << "Correct!" << endl;
+    } 
+    else {
+        cout << "Incorrect. The right answer was " << correct_answer << "." << endl;
+    }
+
+    cout << "\nThank you for completing M3HW1 - Gold Tier!" << endl;
+    cout << "--------------------------------------------" << endl;
+
+    return 0;
+}
