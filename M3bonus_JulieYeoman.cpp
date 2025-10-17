@@ -1,3 +1,10 @@
+/*
+CSC 134
+M3 bonus
+Julie Yeoman
+10/16/2025
+*/
+
 #include <iostream>
 #include <cstdlib>  // for rand(), srand()
 #include <ctime>    // for time()
