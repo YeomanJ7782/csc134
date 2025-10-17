@@ -5,7 +5,7 @@
 using namespace std;
 
 int rollDice() {
-    int die1 = rand() % 6 + 1;  // random number 1–6
+    int die1 = rand() % 6 + 1;  // random number
     int die2 = rand() % 6 + 1;
     int sum = die1 + die2;
 
