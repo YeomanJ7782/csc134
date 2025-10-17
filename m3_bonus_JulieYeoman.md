@@ -3,7 +3,7 @@ hat’s a great question — and exactly the kind of thing a good instructor wou
 
 So here’s how I’d help you as a first-year C++ student:
 
-🧱 Step 1: Start from What You Know
+Step 1: Start from What You Know
 
 Right now, you’ve learned:
 
@@ -21,7 +21,7 @@ if (guess == secretNumber) {
     cout << "Try again!";
 }
 
-🔁 Step 2: Add Loops
+Step 2: Add Loops
 
 Loops let the player keep trying, play multiple rounds, or stay in the game until something happens.
 
