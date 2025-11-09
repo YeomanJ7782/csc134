@@ -1,9 +1,8 @@
 /*
 CSC 134
-M5LAB1 - Choose Your Own Adventure
+M5LAB1
 Julie Yeoman
 11/8/2025
-This program uses multiple void functions to create a simple interactive story.
 */
 
 
@@ -57,7 +56,7 @@ void main_menu() {
     }
 }
 
-// --- STORY FUNCTIONS ---
+// STORY FUNCTIONS
 
 void choice_front_door() {
     cout << "\nYou walk up the creaky steps to the front door." << endl;
