@@ -1,4 +1,4 @@
-/* C
+/* 
 CSC 134
 M5HW1 - Gold
 Julie Yeoman
@@ -18,7 +18,7 @@ void q4_geometryCalculator();
 void q5_distanceTraveled();
 void mainMenu();
 
-// --- MAIN ---
+// MAIN 
 int main() {
     int choice = 0;
     do {
