@@ -2,7 +2,7 @@
 CSC 134
 M5HW1 - Gold
 Julie Yeoman
-11/
+11/8/2025
 */
 
 #include <iostream>
@@ -48,9 +48,9 @@ int main() {
     return 0;
 }
 
-// ------------------------------------------------------------
+
 // QUESTION 1 – Average Rainfall
-// ------------------------------------------------------------
+
 void q1_averageRainfall() {
     string month1, month2, month3;
     double rain1, rain2, rain3;
@@ -76,9 +76,9 @@ void q1_averageRainfall() {
          << ", and " << month3 << " is " << average << " inches.\n";
 }
 
-// ------------------------------------------------------------
+
 // QUESTION 2 – Volume of a Block
-// ------------------------------------------------------------
+
 void q2_blockVolume() {
     double length, width, height;
 
@@ -99,9 +99,9 @@ void q2_blockVolume() {
     cout << "The volume of the block is " << volume << " cubic units.\n";
 }
 
-// ------------------------------------------------------------
+
 // QUESTION 3 – Roman Numeral Converter
-// ------------------------------------------------------------
+
 void q3_romanNumeral() {
     int number;
     cout << "\nEnter a number (1–10): ";
@@ -128,9 +128,9 @@ void q3_romanNumeral() {
     cout << "The Roman numeral version of " << number << " is " << roman << ".\n";
 }
 
-// ------------------------------------------------------------
+
 // QUESTION 4 – Geometry Calculator
-// ------------------------------------------------------------
+
 void q4_geometryCalculator() {
     int choice;
     const double PI = 3.14159;
@@ -184,9 +184,9 @@ void q4_geometryCalculator() {
     }
 }
 
-// ------------------------------------------------------------
+
 // QUESTION 5 – Distance Traveled
-// ------------------------------------------------------------
+
 void q5_distanceTraveled() {
     double speed;
     int hours;
