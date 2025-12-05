@@ -9,44 +9,26 @@ Julie Yeoman
 #include <string>
 using namespace std;
 
-// function declarations
-void part1();
-void part2();
+// Direction constants
+enum Direction { NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3, NUM_DIRECTIONS = 4 };
+
+const string DIRECTION_NAMES[NUM_DIRECTIONS] = {
+    "north", "east", "south", "west"
+};
+
+// Room constants
+enum Room {
+    ENTRYWAY = 0,
+    LAVENDER_ROOM = 1,
+    PEACH_KITCHEN = 2,
+    BLOOM_GARDEN = 3,
+    ROSE_CELLAR = 4,
+    NUM_ROOMS = 5
+};
 
 int main() {
-    part1();
-    part2();
-    return 0;
-}
 
-// Part 1: Loop, NO arrays
-void part1() {
-    cout << "Part 1: No Arrays" << endl;
-
-    int days;
-    cout << "How many days do you want to enter? ";
-    cin >> days;
-
-    int total = 0;
-
-    for (int i = 1; i <= days; i++) {
-        int cars;
-        cout << "Enter cars sold for day " << i << ": ";
-        cin >> cars;
-        total += cars;
-    }
-
-    cout << "Total cars sold: " << total << endl;
-    cout << endl;
-}
-
-// Part 2: Arrays + Loop
-void part2() {
-    cout << "Part 2: Arrays" << endl;
-
-    const int NUM_ROOMS = 5;
-
-    // room names
+    // Room names
     string roomNames[NUM_ROOMS] = {
         "Pastel Entryway",
         "Lavender Reading Room",
@@ -55,31 +37,143 @@ void part2() {
         "Dusty Rose Cellar"
     };
 
-    // descriptions
+    // Room descriptions
     string roomDescriptions[NUM_ROOMS] = {
-        "A quiet entryway with soft pink walls and a gentle fresh linen breeze.",
-        "A cozy reading nook full of lavender cushions and a warm lamplight.",
-        "A calming peach toned kitchen with a steaming teapot and rose plated dishes.",
-        "A terrace decorated with soft blossoms, climbing vines, and warm daylight.",
-        "A cool cellar with dusty rose bricks and ribbon tied boxes in the shadows."
+        "A soft pink entryway with warm sunlight and floral wallpaper.",
+        "A cozy lavender room full of pillows, books, and pastel lamps.",
+        "A peach-colored kitchen with a steaming teapot and gentle glow.",
+        "A bright garden terrace with blossoms in every soft color.",
+        "A rose-hued cellar with ribbon-tied boxes and twinkling lights."
     };
 
-    // items in each room
+    // Simple item system (1 item per room)
     string roomItems[NUM_ROOMS] = {
-        "hand painted keychain",
-        "pressed flower bookmark",
-        "peach patterned mug",
-        "pastel watering can",
-        "rose tinted lantern"
+        "a pastel keychain",
+        "a lavender bookmark",
+        "a warm cup of peach tea",
+        "a pink flower",
+        "a tiny rose quartz stone"
     };
 
-    // Print all rooms using a loop
-    for (int i = 0; i < NUM_ROOMS; i++) {
-        cout << "Room " << i + 1 << ": " << roomNames[i] << endl;
-        cout << "Description: " << roomDescriptions[i] << endl;
-        cout << "Item found here: " << roomItems[i] << endl;
-        cout << "-----------------------------" << endl;
+    // Track whether an item is still in its room
+    bool itemTaken[NUM_ROOMS] = { false, false, false, false, false };
+
+    // Player inventory (simple list)
+    string inventory[10];
+    int inventoryCount = 0;
+
+    // Room connections
+    int connections[NUM_ROOMS][NUM_DIRECTIONS];
+
+    for (int r = 0; r < NUM_ROOMS; r++)
+        for (int d = 0; d < NUM_DIRECTIONS; d++)
+            connections[r][d] = -1;
+
+    // Map layout
+    connections[ENTRYWAY][NORTH] = LAVENDER_ROOM;
+    connections[ENTRYWAY][EAST]  = PEACH_KITCHEN;
+    connections[ENTRYWAY][WEST]  = BLOOM_GARDEN;
+
+    connections[LAVENDER_ROOM][SOUTH] = ENTRYWAY;
+
+    connections[PEACH_KITCHEN][WEST]  = ENTRYWAY;
+    connections[PEACH_KITCHEN][SOUTH] = ROSE_CELLAR;
+
+    connections[BLOOM_GARDEN][EAST] = ENTRYWAY;
+
+    connections[ROSE_CELLAR][NORTH] = PEACH_KITCHEN;
+
+    // Game state
+    int currentRoom = ENTRYWAY;
+    bool running = true;
+
+    while (running) {
+
+        // Room info
+        cout << "\nYou are in the " << roomNames[currentRoom] << ".\n";
+        cout << roomDescriptions[currentRoom] << "\n";
+
+        // Show item if still available
+        if (!itemTaken[currentRoom]) {
+            cout << "You see " << roomItems[currentRoom] << " here.\n";
+        }
+
+        // Show exits
+        cout << "Exits: ";
+        bool foundExit = false;
+        for (int d = 0; d < NUM_DIRECTIONS; d++) {
+            if (connections[currentRoom][d] != -1) {
+                cout << DIRECTION_NAMES[d] << " ";
+                foundExit = true;
+            }
+        }
+        if (!foundExit) cout << "none";
+        cout << "\n";
+
+        // Command input
+        string command;
+        cout << "\nWhat would you like to do? ";
+        cin >> command;
+
+        // Normalize short commands
+        if (command == "n") command = "north";
+        if (command == "e") command = "east";
+        if (command == "s") command = "south";
+        if (command == "w") command = "west";
+
+        // Movement handling
+        bool moved = false;
+        for (int d = 0; d < NUM_DIRECTIONS; d++) {
+            if (command == DIRECTION_NAMES[d]) {
+                if (connections[currentRoom][d] != -1) {
+                    currentRoom = connections[currentRoom][d];
+                } else {
+                    cout << "You can't go that way!\n";
+                }
+                moved = true;
+                break;
+            }
+        }
+
+        if (moved) continue;
+
+        // Take item
+        if (command == "take") {
+            if (!itemTaken[currentRoom]) {
+                cout << "You pick up " << roomItems[currentRoom] << ".\n";
+                inventory[inventoryCount++] = roomItems[currentRoom];
+                itemTaken[currentRoom] = true;
+            } else {
+                cout << "There is nothing to take here.\n";
+            }
+            continue;
+        }
+
+        // Show inventory
+        if (command == "inventory") {
+            cout << "\nYou are carrying:\n";
+            if (inventoryCount == 0) {
+                cout << "Nothing yet.\n";
+            } else {
+                for (int i = 0; i < inventoryCount; i++) {
+                    cout << "- " << inventory[i] << "\n";
+                }
+            }
+            continue;
+        }
+
+        // Quit game
+        if (command == "quit") {
+            running = false;
+            continue;
+        }
+
+        // Unknown command
+        cout << "I don't understand that command.\n";
     }
 
-    cout << endl;
+    cout << "\nThanks for exploring my pastel world!\n";
+
+    return 0;
 }
+
