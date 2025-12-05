@@ -41,9 +41,9 @@ int main() {
     string roomDescriptions[NUM_ROOMS] = {
         "A soft pink entryway with warm sunlight and floral wallpaper.",
         "A cozy lavender room full of pillows, books, and pastel lamps.",
-        "A peach-colored kitchen with a steaming teapot and gentle glow.",
+        "A peach colored kitchen with a steaming teapot and gentle glow.",
         "A bright garden terrace with blossoms in every soft color.",
-        "A rose-hued cellar with ribbon-tied boxes and twinkling lights."
+        "A rose hued cellar with ribbon tied boxes and twinkling lights."
     };
 
     // Simple item system (1 item per room)
