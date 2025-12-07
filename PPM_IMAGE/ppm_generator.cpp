@@ -1,20 +1,20 @@
 /*
-csc 134
-PPM image
+CSC 134
+M6Bonus2
 Julie Yeoman
 12/5/2025
 */
 
+
 #include <iostream>
 #include <fstream>
-#include <cmath>    // For sin(), cos()
 using namespace std;
 
 int main() {
-    const int width = 400;
-    const int height = 400;
-    ofstream outFile("plasma.ppm");
+    const int width = 100;
+    const int height = 100;
 
+    ofstream outFile("ppm_generator.ppm");
     if (!outFile) {
         cerr << "Error opening file!" << endl;
         return 1;
@@ -23,25 +23,34 @@ int main() {
     // PPM header
     outFile << "P3\n" << width << " " << height << "\n255\n";
 
-    // Generate plasma pattern with pink, purple, and blue
+    // Part 1: Pink-to-Red Diagonal Gradient
+
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            double nx = double(x) / width;
-            double ny = double(y) / height;
-
-            // Map sine/cosine to pink, purple, blue
-            int pink   = int((sin(10 * nx + 10 * ny) * 0.5 + 0.5) * 255);   // high red
-            int purple = int((cos(10 * nx - 10 * ny) * 0.5 + 0.5) * 255);   // mix of red & blue
-            int blue   = int((sin(10 * nx - 10 * ny) * 0.5 + 0.5) * 200 + 55); // bright blue, avoid 0
-
-            // Write the pixel as R G B
-            outFile << pink << " " << purple << " " << blue << " ";
+            int r = 255;                // constant red
+            int g = 192;                // constant green
+            int b = 203 - ((x + y) * 203 / (width + height - 2)); // decrease blue diagonally
+            outFile << r << " " << g << " " << b << " ";
         }
         outFile << "\n";
     }
 
+    // Part 2: Pink and Purple Horizontal Stripes
+    /*
+    const int stripeHeight = 10;
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            bool isPink = ((y / stripeHeight) % 2 == 0);
+            int r = isPink ? 255 : 128;
+            int g = isPink ? 192 : 0;
+            int b = isPink ? 203 : 128;
+            outFile << r << " " << g << " " << b << " ";
+        }
+        outFile << "\n";
+    }
+    */
+
     outFile.close();
-    cout << "Plasma PPM image 'plasma.ppm' created with pink, purple, and blue!" << endl;
+    cout << "ppm_generator.ppm generated successfully!" << endl;
     return 0;
 }
-
