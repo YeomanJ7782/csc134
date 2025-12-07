@@ -6,82 +6,160 @@ Julie Yeoman
 */
 
 #include <iostream>
+#include <string>
 using namespace std;
 
+// Direction constants (enum)
+enum Direction { NORTH = 0, EAST, SOUTH, WEST, NUM_DIRECTIONS };
+const string DIRECTION_NAMES[NUM_DIRECTIONS] = { "north", "east", "south", "west" };
+
+// Room constants (enum)
+enum Room { ENTRYWAY = 0, LAVENDER_ROOM, PEACH_KITCHEN, BLOOM_GARDEN, ROSE_CELLAR, TREASURE_ROOM, NUM_ROOMS };
+
 int main() {
-    bool has_key = false;
-    string choice;
+    string roomNames[NUM_ROOMS] = {
+        "Pastel Entryway",
+        "Lavender Reading Room",
+        "Peach Tea Kitchen",
+        "Bloom Garden Terrace",
+        "Dusty Rose Cellar",
+        "Secret Treasure Room"
+    };
 
-    cout << "Welcome to the Gold-Tier Adventure Game!" << endl;
-    cout << "----------------------------------------" << endl;
+    string roomDescriptions[NUM_ROOMS] = {
+        "A soft pink foyer with warm sunlight and floral wallpaper.",
+        "A lilac room full of pillows, books, and gentle light. A sign reads: 'Knowledge is the key!'",
+        "A peach colored kitchen with a warm teapot on the stove.",
+        "A garden terrace blooming in soft pastel flowers.",
+        "A dusty rose cellar filled with boxes tied in ribbon.",
+        "A hidden room glittering with gold and jewels! You've found the treasure!"
+    };
 
-    // Room 1
-    cout << "You wake up in a dark forest. You see two paths. Do you go 'left' or 'right'? ";
-    cin >> choice;
+    string roomItems[NUM_ROOMS] = {
+        "a pastel keychain",
+        "a lavender bookmark",
+        "a cup of peach tea",
+        "a soft pink flower",
+        "a small rose quartz stone",
+        "a golden key"
+    };
 
-    if (choice == "left") {
-        // Room 2: Cabin
-        cout << "You follow the path and find a small cabin. There's an old chest here." << endl;
-        cout << "Do you 'open' the chest or 'leave' it? ";
-        cin >> choice;
+    bool itemTaken[NUM_ROOMS] = { false, false, false, false, false, false };
+    string inventory[10];
+    int inventoryCount = 0;
 
-        if (choice == "open") {
-            cout << "The chest is locked. You need a key. You see a note on the table." << endl;
-            cout << "Do you 'read' the note or 'ignore' it? ";
-            cin >> choice;
+    int connections[NUM_ROOMS][NUM_DIRECTIONS];
+    for (int r = 0; r < NUM_ROOMS; r++)
+        for (int d = 0; d < NUM_DIRECTIONS; d++)
+            connections[r][d] = -1;
 
-            if (choice == "read") {
-                cout << "The note says: 'The key is under the rock outside.' You go outside and find a key!" << endl;
-                has_key = true;
-            } else {
-                cout << "You ignore the note. The chest remains locked. Game over." << endl;
-                return 0;
+    // Map layout
+    connections[ENTRYWAY][NORTH] = LAVENDER_ROOM;
+    connections[ENTRYWAY][EAST]  = PEACH_KITCHEN;
+    connections[ENTRYWAY][WEST]  = BLOOM_GARDEN;
+
+    connections[LAVENDER_ROOM][SOUTH] = ENTRYWAY;
+    connections[LAVENDER_ROOM][EAST]  = TREASURE_ROOM; // Locked room
+
+    connections[PEACH_KITCHEN][WEST]  = ENTRYWAY;
+    connections[PEACH_KITCHEN][SOUTH] = ROSE_CELLAR;
+
+    connections[BLOOM_GARDEN][EAST] = ENTRYWAY;
+
+    connections[ROSE_CELLAR][NORTH] = PEACH_KITCHEN;
+
+    int currentRoom = ENTRYWAY;
+    bool running = true;
+
+    while (running) {
+        cout << "\nYou are in the " << roomNames[currentRoom] << ".\n";
+        cout << roomDescriptions[currentRoom] << "\n";
+
+        if (!itemTaken[currentRoom])
+            cout << "You see " << roomItems[currentRoom] << " here.\n";
+
+        cout << "Exits: ";
+        bool printed = false;
+        for (int d = 0; d < NUM_DIRECTIONS; d++)
+            if (connections[currentRoom][d] != -1) {
+                cout << DIRECTION_NAMES[d] << " ";
+                printed = true;
             }
-        }
+        if (!printed) cout << "none";
+        cout << "\n";
 
-        // After getting the key
-        cout << "Do you 'open' the chest now or 'leave' it? ";
-        cin >> choice;
+        cout << "\nWhat would you like to do? ";
+        string command;
+        cin >> command;
 
-        if (choice == "open" && has_key) {
-            cout << "You use the key to unlock the chest. Inside, you find a treasure! You win!" << endl;
-        } else {
-            cout << "You decide to leave the chest. Maybe next time. Game over." << endl;
-        }
+        if (command == "n") command = "north";
+        if (command == "e") command = "east";
+        if (command == "s") command = "south";
+        if (command == "w") command = "west";
 
-    } else if (choice == "right") {
-        // Room 2: Bear Encounter
-        cout << "You walk along the path and encounter a bear. Do you 'run' or 'climb' a tree? ";
-        cin >> choice;
+        // Handle movement
+        bool moved = false;
+        for (int d = 0; d < NUM_DIRECTIONS; d++) {
+            if (command == DIRECTION_NAMES[d]) {
+                int nextRoom = connections[currentRoom][d];
 
-        if (choice == "run") {
-            cout << "The bear catches you. Game over!" << endl;
-        } else if (choice == "climb") {
-            cout << "You safely escape the bear. You see a sparkling key on a branch above. Do you 'take' it or 'ignore' it? ";
-            cin >> choice;
+                // Lock-and-key: Treasure Room requires golden key
+                if (nextRoom == TREASURE_ROOM) {
+                    bool hasKey = false;
+                    for (int i = 0; i < inventoryCount; i++)
+                        if (inventory[i] == "a pastel keychain") hasKey = true;
 
-            if (choice == "take") {
-                has_key = true;
-                cout << "You take the key and see a hidden treasure chest nearby. Do you 'open' it or 'leave' it? ";
-                cin >> choice;
-
-                if (choice == "open" && has_key) {
-                    cout << "You unlock the chest with your key and discover gold! You win!" << endl;
-                } else {
-                    cout << "You ignore the chest. Game over." << endl;
+                    if (!hasKey) {
+                        cout << "The door to the Treasure Room is locked! You need a key.\n";
+                        moved = true;
+                        break;
+                    } else {
+                        cout << "You use the pastel keychain to unlock the door!\n";
+                    }
                 }
 
-            } else {
-                cout << "You ignore the key. Without it, you cannot access the treasure. Game over." << endl;
+                if (nextRoom != -1) currentRoom = nextRoom;
+                else cout << "You can't go that way.\n";
+
+                moved = true;
+                break;
             }
-        } else {
-            cout << "You freeze in fear. The bear notices you. Game over!" << endl;
+        }
+        if (moved) {
+            // Gold tier ending
+            if (currentRoom == TREASURE_ROOM) {
+                cout << "\nCongratulations! You've found the treasure and completed the game!\n";
+                running = false;
+            }
+            continue;
         }
 
-    } else {
-        cout << "You wander aimlessly until night falls. Game over." << endl;
+        // Take item
+        if (command == "take") {
+            if (!itemTaken[currentRoom]) {
+                cout << "You pick up " << roomItems[currentRoom] << ".\n";
+                inventory[inventoryCount++] = roomItems[currentRoom];
+                itemTaken[currentRoom] = true;
+            } else cout << "There is nothing to take.\n";
+            continue;
+        }
+
+        // Show inventory
+        if (command == "inventory") {
+            cout << "\nYou are carrying:\n";
+            if (inventoryCount == 0) cout << "Nothing yet.\n";
+            else for (int i = 0; i < inventoryCount; i++) cout << "- " << inventory[i] << "\n";
+            continue;
+        }
+
+        if (command == "quit") {
+            running = false;
+            continue;
+        }
+
+        cout << "I don't understand that command.\n";
     }
 
-    cout << "\nThanks for playing the Gold-Tier Adventure Game!" << endl;
+    cout << "\nThank you for exploring this pastel cottage!\n";
     return 0;
 }
